@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd" >
+
+
+    <!-- 配置读取链接数据库的文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 配置数据源  从配置文件中读取数据 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <!-- 配置sqlSessionFactory -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 设置MyBatis核心配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />
+        <!-- 设置数据源 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+
+    <!--mybaits配置-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--配置扫描包路径-->
+        <property name="basePackage" value="com.lsnu.mapper"></property>
+    </bean>
+
+
+
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!-- 配置Controller扫描 -->
+    <context:component-scan base-package="com.lsnu.controller" />
+
+    <!-- 配置注解驱动 -->
+    <mvc:annotation-driven />
+
+    <!-- 对静态资源放行 相对与WebContent的路径 -->
+    <mvc:resources mapping="/**" location="/WEB-INF" />
+
+    <!--Swagger配置-->
+    <mvc:default-servlet-handler />
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <context:annotation-config />
+
+    <bean class="com.lsnu.config.MySwaggerConfig"></bean>
+    <!--配置完成-->
+    <!-- 配置视图解析器 -->
+    <bean	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+
+</beans>
